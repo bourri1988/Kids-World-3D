@@ -1,0 +1,796 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7357d9">
+<title>Kids World 3D</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f3ff;
+  color: #292447;
+  padding-bottom: 100px;
+}
+
+header {
+  background: linear-gradient(135deg,#8065e8,#5942bd);
+  color: white;
+  padding: 25px 18px 30px;
+  border-radius: 0 0 30px 30px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.language {
+  background: white;
+  color: #5942bd;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 13px;
+  font-weight: bold;
+}
+
+.welcome {
+  margin-top: 28px;
+}
+
+.welcome h1 {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  font-size: 15px;
+}
+
+.hero {
+  margin: 20px 15px;
+  padding: 22px;
+  border-radius: 25px;
+  background: linear-gradient(135deg,#ffdb86,#ffb6a3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero h2 {
+  font-size: 20px;
+  color: #633d32;
+}
+
+.hero p {
+  margin-top: 8px;
+  color: #795347;
+  font-size: 13px;
+}
+
+.hero-emoji {
+  font-size: 70px;
+}
+
+.section-title {
+  padding: 15px 18px;
+  font-size: 21px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 14px;
+  padding: 10px 15px 25px;
+}
+
+.card {
+  border-radius: 23px;
+  padding: 20px 10px;
+  text-align: center;
+  box-shadow: 0 5px 15px #0000000d;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.card:active {
+  transform: scale(.95);
+}
+
+.card .emoji {
+  font-size: 53px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  font-size: 17px;
+  color: #393052;
+}
+
+.card p {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #777;
+}
+
+.pink {background:#ffe5ee;}
+.blue {background:#dff1ff;}
+.yellow {background:#fff3cc;}
+.green {background:#dcf8e9;}
+.purple {background:#eee4ff;}
+.orange {background:#ffe9d7;}
+
+/* الشاشات الداخلية */
+
+#lesson, #alphabet {
+  display: none;
+  padding: 25px 15px;
+  text-align: center;
+}
+
+#lesson .big {
+  font-size: 110px;
+  margin: 35px 0;
+}
+
+#lesson h2 {
+  font-size: 27px;
+  margin-bottom: 15px;
+}
+
+/* مدرسة الحروف */
+
+.alphabet-card {
+  background: linear-gradient(145deg,#fff,#e9e1ff);
+  border-radius: 28px;
+  padding: 25px 15px;
+  margin: 20px 0;
+  box-shadow: 0 8px 20px #00000012;
+}
+
+.letter-big {
+  font-size: 110px;
+  color: #7054d5;
+  font-weight: bold;
+}
+
+.letter-picture {
+  font-size: 80px;
+  margin: 12px;
+}
+
+.letter-word {
+  font-size: 25px;
+  font-weight: bold;
+  margin: 12px;
+}
+
+.alphabet-controls {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.alphabet-controls button,
+.sound-button,
+.back {
+  background: #7357d9;
+  color: white;
+  border: none;
+  border-radius: 18px;
+  padding: 14px 20px;
+  font-size: 16px;
+}
+
+.sound-button {
+  background: #ffad45;
+  color: #392b22;
+}
+
+.letter-counter {
+  color: #777;
+  margin: 15px;
+}
+
+.back {
+  margin-top: 20px;
+}
+
+/* الشريط السفلي */
+
+footer {
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 5px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  box-shadow: 0 -3px 15px #0000000b;
+}
+
+footer button {
+  background: none;
+  border: none;
+  color: #6654b6;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+footer span {
+  display: block;
+  font-size: 23px;
+  margin-bottom: 5px;
+}
+
+button {
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="top">
+    <div class="logo">🌟 Kids World 3D</div>
+
+    <button class="language" onclick="changeLanguage()">
+      عربي / FR / EN
+    </button>
+  </div>
+
+  <div class="welcome">
+    <h1 id="welcome">مرحباً يا بطل! 👋</h1>
+    <p id="subtitle">هيا نتعلم ونلعب ونكتشف العالم معاً!</p>
+  </div>
+</header>
+
+<!-- الصفحة الرئيسية -->
+
+<main id="home">
+
+  <div class="hero">
+    <div>
+      <h2 id="heroTitle">عالم مليء بالمرح!</h2>
+      <p id="heroText">تعلم أشياء جديدة كل يوم ✨</p>
+    </div>
+    <div class="hero-emoji">🦁</div>
+  </div>
+
+  <h2 class="section-title" id="sectionTitle">
+    🎯 ماذا سنتعلم اليوم؟
+  </h2>
+
+  <div class="grid">
+
+    <div class="card pink" onclick="openLesson('letters')">
+      <span class="emoji">🔤</span>
+      <h3 data-key="letters">الحروف</h3>
+      <p data-key="lettersDesc">تعلم الحروف</p>
+    </div>
+
+    <div class="card blue" onclick="openLesson('numbers')">
+      <span class="emoji">🔢</span>
+      <h3 data-key="numbers">الأرقام</h3>
+      <p data-key="numbersDesc">تعلم العد</p>
+    </div>
+
+    <div class="card yellow" onclick="openLesson('colors')">
+      <span class="emoji">🎨</span>
+      <h3 data-key="colors">الألوان</h3>
+      <p data-key="colorsDesc">اكتشف الألوان</p>
+    </div>
+
+    <div class="card green" onclick="openLesson('animals')">
+      <span class="emoji">🐘</span>
+      <h3 data-key="animals">الحيوانات</h3>
+      <p data-key="animalsDesc">اكتشف الحيوانات</p>
+    </div>
+
+    <div class="card purple" onclick="openLesson('shapes')">
+      <span class="emoji">⭐</span>
+      <h3 data-key="shapes">الأشكال</h3>
+      <p data-key="shapesDesc">تعلم الأشكال</p>
+    </div>
+
+    <div class="card orange" onclick="openLesson('games')">
+      <span class="emoji">🎮</span>
+      <h3 data-key="games">الألعاب</h3>
+      <p data-key="gamesDesc">العب وتعلم</p>
+    </div>
+
+  </div>
+</main>
+
+<!-- شاشة الدروس الأخرى -->
+
+<div id="lesson">
+  <div id="lessonEmoji" class="big">⭐</div>
+  <h2 id="lessonTitle">مرحباً!</h2>
+  <p id="lessonText">هيا نتعلم معاً!</p>
+
+  <button class="back" onclick="goHome()" id="backButton">
+    العودة للرئيسية ↩
+  </button>
+</div>
+
+<!-- مدرسة الحروف: خارج footer -->
+
+<div id="alphabet">
+
+  <h2 id="alphabetTitle">مدرسة الحروف 🔤</h2>
+
+  <div class="alphabet-card">
+
+    <div class="letter-big" id="letterBig">أ</div>
+
+    <div class="letter-picture" id="letterPicture">🐰</div>
+
+    <div class="letter-word" id="letterWord">
+      أ مثل أرنب
+    </div>
+
+    <button class="sound-button" onclick="speakLetter()">
+      🔊 استمع إلى الحرف
+    </button>
+
+  </div>
+
+  <div class="letter-counter" id="letterCounter">
+    الحرف 1 من 28
+  </div>
+
+  <div class="alphabet-controls">
+    <button onclick="previousLetter()" id="previousButton">
+      السابق ◀
+    </button>
+
+    <button onclick="nextLetter()" id="nextButton">
+      التالي ▶
+    </button>
+  </div>
+
+  <button class="back" onclick="goHome()" id="alphabetBack">
+    🏠 الرئيسية
+  </button>
+
+</div>
+
+<!-- الشريط السفلي -->
+
+<footer>
+
+  <button onclick="goHome()">
+    <span>🏠</span>
+    <span id="navHome">الرئيسية</span>
+  </button>
+
+  <button onclick="openLesson('games')">
+    <span>🎮</span>
+    <span id="navGames">الألعاب</span>
+  </button>
+
+  <button onclick="changeLanguage()">
+    <span>🌍</span>
+    <span id="navLanguage">اللغة</span>
+  </button>
+
+</footer>
+
+<script>
+
+/* اللغات */
+
+let currentLang = "ar";
+
+const translations = {
+
+ar: {
+welcome:"مرحباً يا بطل! 👋",
+subtitle:"هيا نتعلم ونلعب ونكتشف العالم معاً!",
+heroTitle:"عالم مليء بالمرح!",
+heroText:"تعلم أشياء جديدة كل يوم ✨",
+sectionTitle:"🎯 ماذا سنتعلم اليوم؟",
+letters:"الحروف", lettersDesc:"تعلم الحروف",
+numbers:"الأرقام", numbersDesc:"تعلم العد",
+colors:"الألوان", colorsDesc:"اكتشف الألوان",
+animals:"الحيوانات", animalsDesc:"اكتشف الحيوانات",
+shapes:"الأشكال", shapesDesc:"تعلم الأشكال",
+games:"الألعاب", gamesDesc:"العب وتعلم",
+back:"العودة للرئيسية ↩",
+home:"الرئيسية", navGames:"الألعاب", language:"اللغة",
+previous:"السابق ◀", next:"التالي ▶",
+listen:"🔊 استمع إلى الحرف",
+alphabetTitle:"مدرسة الحروف 🔤"
+},
+
+fr: {
+welcome:"Bonjour champion ! 👋",
+subtitle:"Apprenons et découvrons le monde !",
+heroTitle:"Un monde amusant !",
+heroText:"Découvre quelque chose chaque jour ✨",
+sectionTitle:"🎯 Que veux-tu apprendre ?",
+letters:"Lettres", lettersDesc:"Apprendre les lettres",
+numbers:"Nombres", numbersDesc:"Apprendre à compter",
+colors:"Couleurs", colorsDesc:"Découvrir les couleurs",
+animals:"Animaux", animalsDesc:"Découvrir les animaux",
+shapes:"Formes", shapesDesc:"Apprendre les formes",
+games:"Jeux", gamesDesc:"Jouer et apprendre",
+back:"Retour à l'accueil ↩",
+home:"Accueil", navGames:"Jeux", language:"Langue",
+previous:"Précédent ◀", next:"Suivant ▶",
+listen:"🔊 Écouter la lettre",
+alphabetTitle:"École des lettres 🔤"
+},
+
+en: {
+welcome:"Hello champion! 👋",
+subtitle:"Let's learn and explore together!",
+heroTitle:"A world full of fun!",
+heroText:"Discover something new every day ✨",
+sectionTitle:"🎯 What shall we learn today?",
+letters:"Letters", lettersDesc:"Learn the alphabet",
+numbers:"Numbers", numbersDesc:"Learn to count",
+colors:"Colors", colorsDesc:"Discover colors",
+animals:"Animals", animalsDesc:"Discover animals",
+shapes:"Shapes", shapesDesc:"Learn shapes",
+games:"Games", gamesDesc:"Play and learn",
+back:"Back to home ↩",
+home:"Home", navGames:"Games", language:"Language",
+previous:"Previous ◀", next:"Next ▶",
+listen:"🔊 Listen to the letter",
+alphabetTitle:"Alphabet School 🔤"
+}
+
+};
+
+/* تغيير اللغة */
+
+function changeLanguage() {
+
+  const langs = ["ar","fr","en"];
+
+  currentLang =
+    langs[(langs.indexOf(currentLang)+1)%3];
+
+  const t = translations[currentLang];
+
+  document.documentElement.lang = currentLang;
+
+  document.documentElement.dir =
+    currentLang === "ar" ? "rtl" : "ltr";
+
+  document.getElementById("welcome").textContent=t.welcome;
+  document.getElementById("subtitle").textContent=t.subtitle;
+  document.getElementById("heroTitle").textContent=t.heroTitle;
+  document.getElementById("heroText").textContent=t.heroText;
+  document.getElementById("sectionTitle").textContent=t.sectionTitle;
+  document.getElementById("backButton").textContent=t.back;
+  document.getElementById("alphabetBack").textContent=t.back;
+  document.getElementById("navHome").textContent=t.home;
+  document.getElementById("navGames").textContent=t.navGames;
+  document.getElementById("navLanguage").textContent=t.language;
+  document.getElementById("previousButton").textContent=t.previous;
+  document.getElementById("nextButton").textContent=t.next;
+  document.querySelector(".sound-button").textContent=t.listen;
+  document.getElementById("alphabetTitle").textContent=t.alphabetTitle;
+
+  document.querySelectorAll("[data-key]").forEach(el=>{
+    el.textContent=t[el.dataset.key];
+  });
+
+  if(document.getElementById("alphabet").style.display==="block") {
+    letterIndex=0;
+    showLetter();
+  }
+
+  if(document.getElementById("lesson").style.display==="block") {
+    updateLesson();
+  }
+
+}
+
+/* محتوى الدروس */
+
+const lessons = {
+
+numbers:{
+emoji:"🔢",
+ar:["الأرقام","1 - 2 - 3","هيا نتعلم العد!"],
+fr:["Nombres","1 - 2 - 3","Apprenons à compter !"],
+en:["Numbers","1 - 2 - 3","Let's count together!"]
+},
+
+colors:{
+emoji:"🎨",
+ar:["الألوان","🔴 أحمر 🟡 أصفر 🔵 أزرق","هيا نكتشف الألوان!"],
+fr:["Couleurs","🔴 Rouge 🟡 Jaune 🔵 Bleu","Découvrons les couleurs !"],
+en:["Colors","🔴 Red 🟡 Yellow 🔵 Blue","Let's discover colors!"]
+},
+
+animals:{
+emoji:"🐘",
+ar:["الحيوانات","🦁 أسد 🐘 فيل 🐵 قرد","هيا نتعرف على الحيوانات!"],
+fr:["Animaux","🦁 Lion 🐘 Éléphant 🐵 Singe","Découvrons les animaux !"],
+en:["Animals","🦁 Lion 🐘 Elephant 🐵 Monkey","Let's discover animals!"]
+},
+
+shapes:{
+emoji:"⭐",
+ar:["الأشكال","⭐ نجمة 🔵 دائرة 🟥 مربع","هيا نتعلم الأشكال!"],
+fr:["Formes","⭐ Étoile 🔵 Cercle 🟥 Carré","Apprenons les formes !"],
+en:["Shapes","⭐ Star 🔵 Circle 🟥 Square","Let's learn shapes!"]
+},
+
+games:{
+emoji:"🎮",
+ar:["الألعاب","استعد للمرح!","ألعاب تعليمية قادمة!"],
+fr:["Jeux","Prêt à jouer !","Des jeux éducatifs arrivent !"],
+en:["Games","Ready to play!","Educational games coming soon!"]
+}
+
+};
+
+let activeLesson = null;
+
+function updateLesson() {
+
+  if(!activeLesson) return;
+
+  const lesson = lessons[activeLesson][currentLang];
+
+  document.getElementById("lessonEmoji").textContent =
+    lessons[activeLesson].emoji;
+
+  document.getElementById("lessonTitle").textContent =
+    lesson[0];
+
+  document.getElementById("lessonText").textContent =
+    lesson[1]+" — "+lesson[2];
+
+}
+
+/* بيانات الحروف */
+
+const alphabets = {
+
+ar: [
+["أ","🐰","أرنب"],
+["ب","🦆","بطة"],
+["ت","🍎","تفاحة"],
+["ث","🦊","ثعلب"],
+["ج","🐪","جمل"],
+["ح","🐎","حصان"],
+["خ","🥒","خيار"],
+["د","🐔","دجاجة"],
+["ذ","🐺","ذئب"],
+["ر","🌸","وردة"],
+["ز","🦒","زرافة"],
+["س","🐟","سمكة"],
+["ش","☀️","شمس"],
+["ص","🐤","صوص"],
+["ض","🐸","ضفدع"],
+["ط","🦚","طاووس"],
+["ظ","🌳","ظل"],
+["ع","🍇","عنب"],
+["غ","☁️","غيمة"],
+["ف","🐘","فيل"],
+["ق","🌙","قمر"],
+["ك","🐕","كلب"],
+["ل","🍋","ليمون"],
+["م","🍌","موز"],
+["ن","🐝","نحلة"],
+["هـ","🎁","هدية"],
+["و","🌹","وردة"],
+["ي","✋","يد"]
+],
+
+fr: [
+["A","🍍","Ananas"],
+["B","⚽","Ballon"],
+["C","🐱","Chat"],
+["D","🐬","Dauphin"],
+["E","🐘","Éléphant"],
+["F","🌸","Fleur"],
+["G","🦒","Girafe"],
+["H","🏠","Hibou"],
+["I","🏝️","Île"],
+["J","🌻","Jardin"],
+["K","🥝","Kiwi"],
+["L","🦁","Lion"],
+["M","🍎","Maison"],
+["N","☁️","Nuage"],
+["O","🐦","Oiseau"],
+["P","🍐","Poire"],
+["Q","4️⃣","Quatre"],
+["R","🤖","Robot"],
+["S","☀️","Soleil"],
+["T","🐢","Tortue"],
+["U","🚙","Usine"],
+["V","🚲","Vélo"],
+["W","🌐","Wagon"],
+["X","🎼","Xylophone"],
+["Y","🛥️","Yacht"],
+["Z","🦓","Zèbre"]
+],
+
+en: [
+["A","🍎","Apple"],
+["B","⚽","Ball"],
+["C","🐱","Cat"],
+["D","🐶","Dog"],
+["E","🐘","Elephant"],
+["F","🐟","Fish"],
+["G","🦒","Giraffe"],
+["H","🏠","House"],
+["I","🍦","Ice cream"],
+["J","🧃","Juice"],
+["K","🪁","Kite"],
+["L","🦁","Lion"],
+["M","🌙","Moon"],
+["N","🐦","Nest"],
+["O","🍊","Orange"],
+["P","🐼","Panda"],
+["Q","👸","Queen"],
+["R","🐰","Rabbit"],
+["S","☀️","Sun"],
+["T","🐢","Turtle"],
+["U","☂️","Umbrella"],
+["V","🚐","Van"],
+["W","🐋","Whale"],
+["X","🎼","Xylophone"],
+["Y","🧶","Yarn"],
+["Z","🦓","Zebra"]
+]
+
+};
+
+let letterIndex = 0;
+
+/* عرض الحرف */
+
+function showLetter() {
+
+  const list = alphabets[currentLang];
+  const item = list[letterIndex];
+
+  document.getElementById("letterBig").textContent = item[0];
+
+  document.getElementById("letterPicture").textContent = item[1];
+
+  document.getElementById("letterWord").textContent = item[2];
+
+  document.getElementById("letterCounter").textContent =
+    (currentLang==="ar" ? "الحرف " :
+     currentLang==="fr" ? "Lettre " : "Letter ")
+    + (letterIndex+1) + " / " + list.length;
+
+}
+
+/* فتح الدروس */
+
+function openLesson(type) {
+
+  document.getElementById("home").style.display="none";
+  document.getElementById("alphabet").style.display="none";
+  document.getElementById("lesson").style.display="none";
+
+  if(type==="letters") {
+
+    letterIndex=0;
+
+    document.getElementById("alphabet").style.display="block";
+
+    showLetter();
+
+  } else {
+
+    activeLesson=type;
+
+    document.getElementById("lesson").style.display="block";
+
+    updateLesson();
+
+  }
+
+  window.scrollTo(0,0);
+
+}
+
+/* الحرف التالي */
+
+function nextLetter() {
+
+  letterIndex++;
+
+  if(letterIndex>=alphabets[currentLang].length) {
+    letterIndex=0;
+  }
+
+  showLetter();
+
+}
+
+/* الحرف السابق */
+
+function previousLetter() {
+
+  letterIndex--;
+
+  if(letterIndex<0) {
+    letterIndex=alphabets[currentLang].length-1;
+  }
+
+  showLetter();
+
+}
+
+/* نطق الحرف */
+
+function speakLetter() {
+
+  if(!("speechSynthesis" in window)) {
+    alert("الصوت غير مدعوم في هذا المتصفح");
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const item=alphabets[currentLang][letterIndex];
+
+  const utterance =
+    new SpeechSynthesisUtterance(item[0]);
+
+  utterance.lang =
+    currentLang==="ar" ? "ar-SA" :
+    currentLang==="fr" ? "fr-FR" : "en-US";
+
+  utterance.rate=0.75;
+
+  window.speechSynthesis.speak(utterance);
+
+}
+
+/* العودة للرئيسية */
+
+function goHome() {
+
+  document.getElementById("home").style.display="block";
+  document.getElementById("lesson").style.display="none";
+  document.getElementById("alphabet").style.display="none";
+
+  activeLesson=null;
+
+  if("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+
+  window.scrollTo(0,0);
+
+}
+
+</script>
+
+</body>
+</html>
